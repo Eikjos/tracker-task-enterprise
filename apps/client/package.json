@@ -10,10 +10,30 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "nuxt": "^3.13.0",
-    "vue": "latest"
+    "@hebilicious/vue-query-nuxt": "^0.3.0",
+    "@nuxt/eslint": "^0.5.5",
+    "@nuxt/fonts": "^0.8.0",
+    "@pinia/nuxt": "^0.5.4",
+    "@tanstack/vue-query": "^5.54.1",
+    "@vee-validate/nuxt": "^4.13.2",
+    "@vee-validate/zod": "^4.13.2",
+    "@vueuse/core": "^11.0.3",
+    "@vueuse/integrations": "^11.0.3",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "ky": "^1.7.2",
+    "lucide-vue-next": "^0.440.0",
+    "nuxt": "^3.13.1",
+    "pinia": "^2.2.2",
+    "radix-vue": "^1.9.5",
+    "shadcn-nuxt": "^0.10.4",
+    "tailwind-merge": "^2.5.2",
+    "tailwindcss-animate": "^1.0.7",
+    "vue": "^3.5.4",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-     "@repo/models": "*"
+    "@nuxtjs/tailwindcss": "^6.12.1",
+    "@repo/models": "workspace:*"
   }
 }
