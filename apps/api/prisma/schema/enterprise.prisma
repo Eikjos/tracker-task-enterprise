@@ -1,0 +1,44 @@
+model Enterprise {
+  id Int @id @default(autoincrement())
+  name String
+  legalStatus LegalStatus @default(AUTO_ENTREPRENEUR)
+  siren String
+  naf String
+  TVANumber String
+  RCSNumber String
+  address String
+  city String
+  zipCode String
+  country String
+  email String
+  phone String
+  creationDate DateTime
+  manager User @relation(fields: [managerId], references: [id])
+  managerId Int @unique
+}
+
+enum LegalStatus {
+  // Individual enterprise
+  AUTO_ENTREPRENEUR
+  ENTREPRISE_INDIVIDUELLE
+  EIRL
+  // Societies
+  SARL
+  SAS
+  SASU
+  SA
+  SCI
+  SNC
+  SCS
+  SCOP
+  // Other types
+  ASSOCIATION
+  COOPERATIVE
+  GROUPMENT
+  // Special Status
+  EN_REGULARISATION
+  EN_CESSATION
+  EN_LIQUIDATION
+  EN_SUSPENSION
+  EN_FERMETURE
+}

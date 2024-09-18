@@ -9,4 +9,5 @@ model User {
   createdAt DateTime @default(now())
   isEnterprise Boolean @default(false)
   isCustomer Boolean @default(false)
+  enterprise Enterprise?
 }

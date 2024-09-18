@@ -1,5 +1,5 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import type { LoginData, RefreshSessionData, UserInformationData } from '@repo/models';
+import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import type { RefreshSessionData, UserInformationData } from '@repo/models';
 import { UserRegister } from '@repo/models/users';
 import { UserService } from './user.service';
 
@@ -11,13 +11,9 @@ export class UsersController {
   async register(@Body() user : UserRegister) : Promise<UserInformationData>  {
     return await this.userService.create(user);
   }
-
-  @Post("/api/login")
-  async login(@Body() loginData : LoginData)  : Promise<UserInformationData> {
-    return await this.userService.login(loginData.email, loginData.password);
-  }
-
+  
   @Post("@me")
+  @HttpCode(200)
   async currentUser(@Body() refresh : RefreshSessionData) {
     return await this.userService.currentUser(refresh);
   }

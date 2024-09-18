@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { RefreshSessionData, UserInformationData } from '@repo/models';
 import { UserRegister } from '@repo/models/users';
@@ -19,13 +19,13 @@ export class UserService {
   async login(email: string, password: string) : Promise<UserInformationData> {
     const user = await this.findUserByEmail(email);
 
-    if (user === undefined)
-      return null
+    if (user === null)
+      throw new HttpException("Credentials invalids", HttpStatus.BAD_REQUEST);
 
     // Check password
-    var check = bcrypt.compareSync(password,  user.password);
+    const check = bcrypt.compareSync(password,  user.password);
     if (!check)
-      return null;
+       throw new HttpException("Credentials invalids", HttpStatus.BAD_REQUEST);
 
     // Generate tokens
     return this.authenticated(user);
@@ -37,7 +37,7 @@ export class UserService {
   async create(model : UserRegister) {
     // Check if user already exists
     const user = this.findUserByEmail(model.email);
-    if (user !== undefined)
+    if (user !== null)
       throw "User already exist"
 
     // Generate salt and hash password
@@ -72,8 +72,9 @@ export class UserService {
       Refresh the session of the user.
   */
   async currentUser(refresh : RefreshSessionData) {
+    const users = await this.prisma.user.findMany();
     const user = await this.findUserByRefreshToken(refresh.refreshToken);
-    if (user === undefined)
+    if (user === null)
       throw new UnauthorizedException();
 
     return await this.authenticated(user);

@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { User } from "@prisma/client";
-import { RefreshSessionData } from "@repo/models";
+import { RefreshSessionResponse } from "@repo/models";
 import { PrismaService } from "src/prisma.service";
 
 @Injectable()
@@ -13,7 +13,7 @@ export class AuthService {
   /*
       Permet de générer le token JWT pour l'utilisateur et le refreshToken associé.
   */
-  async generateToken(user : User) : Promise<RefreshSessionData> {
+  async generateToken(user : User) : Promise<RefreshSessionResponse> {
     const payload = { sub: user.id };
     return {
       token: await this.jwtService.signAsync(payload),
@@ -29,7 +29,7 @@ export class AuthService {
       expiresIn: '7 days'
     })
 
-    this.prisma.user.update({
+    await this.prisma.user.update({
       where: { id : user.id},
       data: { refreshToken },
     })

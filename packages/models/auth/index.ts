@@ -6,12 +6,14 @@ export type LoginData = {
 }
 
 export type RefreshSessionData = {
-  token: string;
   refreshToken: string;
 }
 
-export type UserInformationData = {
-  token: string;
+export type RefreshSessionResponse = {
   refreshToken: string;
-  user: UserData
+  token: string; 
 }
+
+export type UserInformationData = {
+  user: UserData
+} & RefreshSessionResponse;
