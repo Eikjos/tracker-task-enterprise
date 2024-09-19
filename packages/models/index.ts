@@ -1,1 +1,3 @@
-export * from './auth';
+export * from './src/auth';
+export * from './src/users';
+

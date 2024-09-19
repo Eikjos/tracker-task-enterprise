@@ -1,9 +1,10 @@
 import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { User } from '@prisma/client';
-import { RefreshSessionData, UserInformationData } from '@repo/models';
-import { UserRegister } from '@repo/models/users';
 import * as bcrypt from "bcrypt";
 import { AuthService } from 'src/auth/auth.service';
+import { AuthDto } from 'src/dto/auth/auth.dto';
+import { RefreshSessionDto } from 'src/dto/auth/refresh-session.dto';
+import { CreateUserDto } from 'src/dto/users/create-user.dto';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
@@ -16,7 +17,7 @@ export class UserService {
     Authenticated the user by credentials (email, password).
     If credentials are invalid return null. Otherwise, return the user with token and refreshToken.
   */
-  async login(email: string, password: string) : Promise<UserInformationData> {
+  async login(email: string, password: string) : Promise<AuthDto> {
     const user = await this.findUserByEmail(email);
 
     if (user === null)
@@ -34,7 +35,7 @@ export class UserService {
   /*
       Register the user and authenticated it.
   */
-  async create(model : UserRegister) {
+  async create(model : CreateUserDto) {
     // Check if user already exists
     const user = this.findUserByEmail(model.email);
     if (user !== null)
@@ -71,7 +72,7 @@ export class UserService {
   /*
       Refresh the session of the user.
   */
-  async currentUser(refresh : RefreshSessionData) {
+  async currentUser(refresh : RefreshSessionDto) {
     const users = await this.prisma.user.findMany();
     const user = await this.findUserByRefreshToken(refresh.refreshToken);
     if (user === null)
@@ -96,7 +97,7 @@ export class UserService {
     })
   }
 
-  private async authenticated(user : User) : Promise<UserInformationData> {
+  private async authenticated(user : User) : Promise<AuthDto> {
     const tokens =  await this.authService.generateToken(user);
     return {
       user : { ...user },
