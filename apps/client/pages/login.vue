@@ -24,6 +24,10 @@ import { z } from 'zod';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 
+
+definePageMeta({
+  layout: 'login'
+})
 const login = useLogin();
 const error = ref<string>();
 const loginSchema = toTypedSchema(
@@ -41,11 +45,7 @@ const [password] = defineField('password');
 const onSubmit = handleSubmit((values : LoginData) => {
   login.mutate(values, {
     onSuccess: (data : UserInformationData) => {
-      if (data.user !== null) {
-        navigateTo('/');
-      } else {
-        console.log("il y a une erreur");
-      }
+      navigateTo('/entreprise/create');
     },
     onError : async (e : HTTPError) => {
       if (e.response.status === 500) {
@@ -54,7 +54,7 @@ const onSubmit = handleSubmit((values : LoginData) => {
         error.value = "Les identifiants sont invalides"
       }
     },
-  })
+  });
 })
 
 </script>

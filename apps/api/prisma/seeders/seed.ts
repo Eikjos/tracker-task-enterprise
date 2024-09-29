@@ -1,3 +1,4 @@
+import { seedJuridicShape } from "./seed-juridic-shapes";
 import { seedUsers } from "./seed-user";
 
 
@@ -6,6 +7,9 @@ async function main() {
 
   await seedUsers();
   console.log('Seeded users.');
+
+  await seedJuridicShape();
+  console.log('Seed juridic shapes');
 
   console.log('All seeds executed successfully.');
 }

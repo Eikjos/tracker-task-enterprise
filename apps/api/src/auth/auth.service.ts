@@ -16,7 +16,9 @@ export class AuthService {
   async generateToken(user : User) : Promise<RefreshSessionResponseDto> {
     const payload = { sub: user.id };
     return {
-      token: await this.jwtService.signAsync(payload),
+      token: await this.jwtService.signAsync(payload, {
+        secret: process.env.JWT_SECRET,
+      }),
       refreshToken: await this.generateRefreshToken(user)
     };
   }
