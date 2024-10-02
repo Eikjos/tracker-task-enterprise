@@ -5,6 +5,6 @@ export type EnterpriseInformation = {
   zipCode: string;
   city: string;
   numberTva: string;
-  legalStatus: string;
+  juridicShape: string;
   socialCapital: number;
 }
