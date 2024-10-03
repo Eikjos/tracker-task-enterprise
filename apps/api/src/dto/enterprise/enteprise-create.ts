@@ -1,9 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { EnterpriseInformation } from '@repo/models';
+import { EnterpriseCreateModel } from '@repo/models';
 
-export class EnterpriseInformationDto implements EnterpriseInformation {
-  @ApiProperty({ description: 'Enteprise id' })
-  id: number;
+export class EnterpriseCreateDto implements EnterpriseCreateModel {
   @ApiProperty({ description: 'Enterprise juridic shape' })
   juridicShape: string;
   @ApiProperty({ description: 'Enterprise name' })
@@ -20,4 +18,8 @@ export class EnterpriseInformationDto implements EnterpriseInformation {
   numberTVA: string;
   @ApiProperty({ description: 'Enterprise social capital' })
   socialCapital: number;
+  @ApiProperty({ description: 'Enterprise mail' })
+  email: string;
+  @ApiProperty({ description: 'Enterprise phone' })
+  phone: string;
 }

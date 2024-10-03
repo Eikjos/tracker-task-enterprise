@@ -1,7 +1,7 @@
 :root {
   --error: #ff4d4a;
   --success: #21ad2a;
-  --gradient: linear-gradient(to top left,#000C40,#607D8B);
+  --gradient: linear-gradient(to top left, #000c40, #607d8b);
   --background: 243 100% 98.26%;
   --foreground: 243 10% 0.52%;
 
@@ -35,7 +35,7 @@
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --gradient: linear-gradient(to top left,#2b5876,#4e4376);
+    --gradient: linear-gradient(to top left, #2b5876, #4e4376);
 
     --background: 217 30.549999999999997% 2.56%;
     --foreground: 217 4.699999999999999% 96.6%;
@@ -50,7 +50,7 @@
     --card-foreground: 217 4.699999999999999% 96.6%;
 
     --border: 217 23.5% 9.6%;
-    --input: 217 23.5% 9.6%;
+    --input: 255 10% 22%;
 
     --primary: 217 47% 32%;
     --primary-foreground: 217 4.699999999999999% 96.6%;

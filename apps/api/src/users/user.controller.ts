@@ -5,25 +5,25 @@ import { RefreshSessionDto } from 'src/dto/auth/refresh-session.dto';
 import { CreateUserDto } from 'src/dto/users/create-user.dto';
 import { UserService } from './user.service';
 
-@ApiTags("Users")
-@Controller("api/users")
+@ApiTags('Users')
+@Controller('api/users')
 export class UsersController {
-  constructor(private readonly userService : UserService) {}
+  constructor(private readonly userService: UserService) {}
 
-  @Post("register")
+  @Post('register')
   @ApiBody({
     type: CreateUserDto,
   })
-  async register(@Body() user : CreateUserDto) : Promise<AuthDto>  {
+  async register(@Body() user: CreateUserDto): Promise<AuthDto> {
     return await this.userService.create(user);
   }
-  
-  @Post("@me")
+
+  @Post('@me')
   @HttpCode(200)
   @ApiBody({
-    type: RefreshSessionDto
+    type: RefreshSessionDto,
   })
-  async currentUser(@Body() refresh : RefreshSessionDto) {
+  async currentUser(@Body() refresh: RefreshSessionDto) {
     return await this.userService.currentUser(refresh);
   }
 }

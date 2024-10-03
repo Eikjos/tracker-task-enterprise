@@ -2,9 +2,8 @@ model Enterprise {
   id Int @id @default(autoincrement())
   name String
   siren String
-  naf String
+  siret String
   TVANumber String
-  RCSNumber String
   address String
   city String
   zipCode String

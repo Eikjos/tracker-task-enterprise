@@ -10,7 +10,14 @@ export async function seedUsers() {
     const password = await bcrypt.hashSync('azeqsdwxc.2025', salt);
     await prisma.user.createMany({
       data: [
-        { email: 'thomashamelin3@gmail.com', firstName: 'Bernard', lastName: 'Dupont', isEnterprise: true, password : password, passwordSalt: salt },
+        {
+          email: 'thomashamelin3@gmail.com',
+          firstName: 'Bernard',
+          lastName: 'Dupont',
+          isEnterprise: true,
+          password: password,
+          passwordSalt: salt,
+        },
       ],
     });
   }

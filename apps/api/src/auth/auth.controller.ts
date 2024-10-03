@@ -4,17 +4,17 @@ import { AuthDto } from 'src/dto/auth/auth.dto';
 import { LoginDto } from 'src/dto/auth/login.dto';
 import { UserService } from '../users/user.service';
 
-@ApiTags("Auth")
+@ApiTags('Auth')
 @Controller()
 export class AuthController {
-  constructor(private readonly userService : UserService) {}
+  constructor(private readonly userService: UserService) {}
 
-  @Post("/api/login")
+  @Post('/api/login')
   @HttpCode(200)
   @ApiBody({
-    type: LoginDto
+    type: LoginDto,
   })
-  async login(@Body() loginData : LoginDto)  : Promise<AuthDto> {
+  async login(@Body() loginData: LoginDto): Promise<AuthDto> {
     return await this.userService.login(loginData.email, loginData.password);
   }
 }

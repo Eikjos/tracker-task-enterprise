@@ -1,6 +1,11 @@
-import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { User } from '@prisma/client';
-import * as bcrypt from "bcrypt";
+import * as bcrypt from 'bcrypt';
 import { AuthService } from 'src/auth/auth.service';
 import { AuthDto } from 'src/dto/auth/auth.dto';
 import { RefreshSessionDto } from 'src/dto/auth/refresh-session.dto';
@@ -9,7 +14,10 @@ import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly prisma : PrismaService, private readonly authService : AuthService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly authService: AuthService,
+  ) {}
 
   // -- Methods --
 
@@ -17,16 +25,16 @@ export class UserService {
     Authenticated the user by credentials (email, password).
     If credentials are invalid return null. Otherwise, return the user with token and refreshToken.
   */
-  async login(email: string, password: string) : Promise<AuthDto> {
+  async login(email: string, password: string): Promise<AuthDto> {
     const user = await this.findUserByEmail(email);
 
     if (user === null)
-      throw new HttpException("Credentials invalids", HttpStatus.BAD_REQUEST);
+      throw new HttpException('Credentials invalids', HttpStatus.BAD_REQUEST);
 
     // Check password
-    const check = bcrypt.compareSync(password,  user.password);
+    const check = bcrypt.compareSync(password, user.password);
     if (!check)
-       throw new HttpException("Credentials invalids", HttpStatus.BAD_REQUEST);
+      throw new HttpException('Credentials invalids', HttpStatus.BAD_REQUEST);
 
     // Generate tokens
     return this.authenticated(user);
@@ -35,11 +43,10 @@ export class UserService {
   /*
       Register the user and authenticated it.
   */
-  async create(model : CreateUserDto) {
+  async create(model: CreateUserDto) {
     // Check if user already exists
     const user = this.findUserByEmail(model.email);
-    if (user !== null)
-      throw "User already exist"
+    if (user !== null) throw 'User already exist';
 
     // Generate salt and hash password
     const passwordSalt = await bcrypt.genSalt();
@@ -52,7 +59,7 @@ export class UserService {
         passwordSalt: passwordSalt,
         password: passwordHash,
         isEnterprise: true,
-      }
+      },
     });
 
     // Generate tokens
@@ -62,53 +69,51 @@ export class UserService {
   /*
       Logout the user. (Remove refreshToken)
   */
-  async logout(userId : number) {
+  async logout(userId: number) {
     await this.prisma.user.update({
-      where: {id : userId},
-      data: { refreshToken : null }
+      where: { id: userId },
+      data: { refreshToken: null },
     });
   }
 
   /*
       Refresh the session of the user.
   */
-  async currentUser(refresh : RefreshSessionDto) {
-    const users = await this.prisma.user.findMany();
+  async currentUser(refresh: RefreshSessionDto) {
     const user = await this.findUserByRefreshToken(refresh.refreshToken);
-    if (user === null)
-      throw new UnauthorizedException();
+    if (user === null) throw new UnauthorizedException();
 
     return await this.authenticated(user);
   }
 
-  async findUserById(id : number) {
+  async findUserById(id: number) {
     await this.prisma.user.findFirst({
-      where: { id }
+      where: { id },
     });
   }
 
   // -- Tools --
 
-  private async findUserByEmail(email : string) : Promise<User> {
+  private async findUserByEmail(email: string): Promise<User> {
     return await this.prisma.user.findFirst({
       where: {
-        email
-      }
-    })
+        email,
+      },
+    });
   }
 
-  private async authenticated(user : User) : Promise<AuthDto> {
-    const tokens =  await this.authService.generateToken(user);
+  private async authenticated(user: User): Promise<AuthDto> {
+    const tokens = await this.authService.generateToken(user);
     return {
-      user : { ...user },
+      user: { ...user },
       token: tokens.token,
-      refreshToken: tokens.refreshToken
-    }
+      refreshToken: tokens.refreshToken,
+    };
   }
 
-  private async findUserByRefreshToken(refreshToken : string) {
+  private async findUserByRefreshToken(refreshToken: string) {
     return await this.prisma.user.findFirst({
-      where: { refreshToken }
-    })
+      where: { refreshToken },
+    });
   }
 }
