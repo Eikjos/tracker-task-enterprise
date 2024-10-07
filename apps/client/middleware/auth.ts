@@ -1,5 +1,4 @@
 export default defineNuxtRouteMiddleware(async () => {
-  const nuxtApp = useNuxtApp();
   if (import.meta.server) {
     const store = useAuthStore();
     if (store.refreshToken !== undefined) {
@@ -8,12 +7,12 @@ export default defineNuxtRouteMiddleware(async () => {
         { refreshToken: store.refreshToken },
         {
           onError: () => {
-            return nuxtApp.$router.replace("/login");
+            return navigateTo("/login");
           },
         }
       );
     } else {
-      return nuxtApp.$router.replace("/login");
+      return navigateTo("/login");
     }
   }
 });

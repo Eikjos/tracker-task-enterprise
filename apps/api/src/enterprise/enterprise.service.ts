@@ -23,7 +23,7 @@ export class EnterpriseService {
         siret: model.siret,
         address: model.address,
         city: model.city,
-        siren: model.siret.substring(0, 9),
+        siren: model.siret.substring(0, 8),
         managerId: userId,
         creationDate: new Date(),
         juridicShapeId: model.juridicShape,

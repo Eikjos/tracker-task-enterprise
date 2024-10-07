@@ -4,13 +4,13 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { AuthService } from 'src/auth/auth.service';
 import { AuthDto } from 'src/dto/auth/auth.dto';
 import { RefreshSessionDto } from 'src/dto/auth/refresh-session.dto';
 import { CreateUserDto } from 'src/dto/users/create-user.dto';
 import { PrismaService } from 'src/prisma.service';
+import type { UserWithEnterprise } from '../../types/user';
 
 @Injectable()
 export class UserService {
@@ -63,7 +63,7 @@ export class UserService {
     });
 
     // Generate tokens
-    return this.authenticated(userCreated);
+    return this.authenticated({ ...userCreated, enterprise: null });
   }
 
   /*
@@ -94,26 +94,42 @@ export class UserService {
 
   // -- Tools --
 
-  private async findUserByEmail(email: string): Promise<User> {
+  private async findUserByEmail(email: string): Promise<UserWithEnterprise> {
     return await this.prisma.user.findFirst({
       where: {
         email,
       },
+      include: {
+        enterprise: true,
+      },
     });
   }
 
-  private async authenticated(user: User): Promise<AuthDto> {
+  private async authenticated(user: UserWithEnterprise): Promise<AuthDto> {
     const tokens = await this.authService.generateToken(user);
     return {
-      user: { ...user },
+      user: {
+        ...user,
+        enterprise: {
+          ...user.enterprise,
+          numberTVA: user.enterprise.TVANumber,
+          juridicShape: user.enterprise.juridicShapeId,
+          socialCapital: 0,
+        },
+      },
       token: tokens.token,
       refreshToken: tokens.refreshToken,
     };
   }
 
-  private async findUserByRefreshToken(refreshToken: string) {
+  private async findUserByRefreshToken(
+    refreshToken: string,
+  ): Promise<UserWithEnterprise> {
     return await this.prisma.user.findFirst({
       where: { refreshToken },
+      include: {
+        enterprise: true,
+      },
     });
   }
 }
