@@ -1,7 +1,12 @@
 export default defineNuxtRouteMiddleware(() => {
   if (import.meta.server) {
     const store = useAuthStore();
+    if (!store.refreshToken) return navigateTo("/login");
+  }
+  if (import.meta.client) {
+    const store = useAuthStore();
     if (store.refreshToken !== undefined) {
+      console.log(store.refreshToken);
       const refresh = useRefreshSession();
       refresh.mutate(
         { refreshToken: store.refreshToken },

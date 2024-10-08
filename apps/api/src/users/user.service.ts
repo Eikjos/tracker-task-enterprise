@@ -10,7 +10,7 @@ import { AuthDto } from 'src/dto/auth/auth.dto';
 import { RefreshSessionDto } from 'src/dto/auth/refresh-session.dto';
 import { CreateUserDto } from 'src/dto/users/create-user.dto';
 import { PrismaService } from 'src/prisma.service';
-import type { UserWithEnterprise } from '../../types/user';
+import type { UserWithEnterprise } from '../types/user';
 
 @Injectable()
 export class UserService {
@@ -70,6 +70,7 @@ export class UserService {
       Logout the user. (Remove refreshToken)
   */
   async logout(userId: number) {
+    console.log(userId);
     await this.prisma.user.update({
       where: { id: userId },
       data: { refreshToken: null },

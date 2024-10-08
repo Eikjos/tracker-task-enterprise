@@ -76,7 +76,7 @@ const [password] = defineField("password");
 const onSubmit = handleSubmit((values: LoginData) => {
   login.mutate(values, {
     onSuccess: () => {
-      navigateTo("/enterprise/create");
+      navigateTo("/");
     },
     onError: async (e: HTTPError) => {
       if (e.response.status === 500) {

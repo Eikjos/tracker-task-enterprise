@@ -6,7 +6,7 @@ import { PrismaService } from 'src/prisma.service';
 import {
   EtablissementResponse,
   SireneAuthentification,
-} from 'types/sirene-api';
+} from 'src/types/sirene-api';
 
 @Injectable()
 export class EnterpriseService {

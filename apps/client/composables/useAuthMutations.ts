@@ -5,7 +5,11 @@ import type {
   UserInformationData,
 } from "@repo/models";
 import type { HTTPError } from "ky";
-import { currentUser, login as loginAPI } from "~/api/auth";
+import {
+  currentUser,
+  login as loginAPI,
+  logout as logoutAPI,
+} from "~/api/auth";
 import { useAuthStore } from "~/stores/auth";
 
 export function useLogin() {
@@ -43,6 +47,21 @@ export function useRefreshSession() {
       useCookie("refreshToken").value = data.refreshToken;
     },
     onError: () => {
+      authStore.user = undefined;
+      authStore.token = undefined;
+      authStore.refreshToken = undefined;
+      authStore.isAuthenticated = false;
+      useCookie("token").value = null;
+      useCookie("refreshToken").value = null;
+    },
+  });
+}
+
+export function useLogout() {
+  const authStore = useAuthStore();
+  return useMutation({
+    mutationFn: logoutAPI,
+    onSuccess: () => {
       authStore.user = undefined;
       authStore.token = undefined;
       authStore.refreshToken = undefined;

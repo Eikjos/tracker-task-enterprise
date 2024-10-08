@@ -5,12 +5,14 @@ import Menu from "~/components/organisms/Menu.vue";
 </script>
 
 <template>
-    <div class="w-screen min-h-[calc(100vh-59px)]">
+  <div>
+    <div class="w-screen min-h-[calc(100vh-96px)]">
       <Header />
       <div class="flex flew-row">
         <Menu />
         <slot />
       </div>
     </div>
-    <Footer />
+    <Footer class="mt-10" />
+  </div>
 </template>
