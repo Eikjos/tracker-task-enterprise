@@ -1,0 +1,37 @@
+version: "3.8"
+services:
+  db:
+    container_name: freeflow-database
+    image: postgres
+    environment:
+      - POSTGRES_USER=freeflow
+      - POSTGRES_PASSWORD=freeflowPWD
+      - POSTGRES_DB=freeflowPWD
+    ports:
+      - 5432:5432
+    volumes:
+      - data:/var/lib/postgresql/data
+  api:
+    container_name: freeflow-api
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://freeflow:freeflowPWD@db:5432/freeflow?schema=public
+      - JWT_SECRET=SECRETJWTOKENAEPDKCALF2317893!
+      - INSEE_API_KEY=
+    build:
+      context: ./apps/api
+    ports:
+      - "8080:80"
+  client:
+    container_name: freeflow-client
+    depends_on:
+      - api
+    environment:
+      - API_URL=http://api
+    build:
+      context: ./apps/client
+    ports:
+      - "3000:80"
+volumes:
+  data:
