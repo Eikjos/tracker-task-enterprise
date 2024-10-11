@@ -17,8 +17,8 @@ export default defineNuxtRouteMiddleware(async () => {
           },
         }
       );
+    } else {
+      return navigateTo("/login");
     }
-  } else {
-    return navigateTo("/login");
   }
 });

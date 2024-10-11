@@ -63,14 +63,13 @@ export class UserService {
     });
 
     // Generate tokens
-    return this.authenticated({ ...userCreated, enterprise: null });
+    return this.authenticated({ ...userCreated, enterprise: undefined });
   }
 
   /*
       Logout the user. (Remove refreshToken)
   */
   async logout(userId: number) {
-    console.log(userId);
     await this.prisma.user.update({
       where: { id: userId },
       data: { refreshToken: null },
@@ -95,8 +94,8 @@ export class UserService {
 
   // -- Tools --
 
-  private async findUserByEmail(email: string): Promise<UserWithEnterprise> {
-    return await this.prisma.user.findFirst({
+  private findUserByEmail(email: string) {
+    return this.prisma.user.findFirst({
       where: {
         email,
       },
@@ -111,22 +110,22 @@ export class UserService {
     return {
       user: {
         ...user,
-        enterprise: {
-          ...user.enterprise,
-          numberTVA: user.enterprise.TVANumber,
-          juridicShape: user.enterprise.juridicShapeId,
-          socialCapital: 0,
-        },
+        enterprise: user.enterprise
+          ? {
+              ...user.enterprise,
+              numberTVA: user.enterprise.TVANumber,
+              juridicShape: user.enterprise.juridicShapeId,
+              socialCapital: 0,
+            }
+          : null,
       },
       token: tokens.token,
       refreshToken: tokens.refreshToken,
     };
   }
 
-  private async findUserByRefreshToken(
-    refreshToken: string,
-  ): Promise<UserWithEnterprise> {
-    return await this.prisma.user.findFirst({
+  private findUserByRefreshToken(refreshToken: string) {
+    return this.prisma.user.findFirst({
       where: { refreshToken },
       include: {
         enterprise: true,

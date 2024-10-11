@@ -29,8 +29,6 @@ import { useLogout } from "~/composables/useAuthMutations";
 const logout = useLogout();
 
 const onClickLogout = () => {
-  console.log("coucou");
-  console.log("hello");
   logout.mutate(undefined, {
     onSuccess: () => {
       navigateTo("/login");

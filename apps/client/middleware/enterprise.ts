@@ -5,8 +5,7 @@ export default defineNuxtRouteMiddleware(() => {
   }
   if (import.meta.client) {
     const store = useAuthStore();
-    if (store.refreshToken !== undefined) {
-      console.log(store.refreshToken);
+    if (store.refreshToken) {
       const refresh = useRefreshSession();
       refresh.mutate(
         { refreshToken: store.refreshToken },

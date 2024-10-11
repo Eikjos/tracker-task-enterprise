@@ -19,5 +19,5 @@ export class EnterpriseInformationDto implements EnterpriseInformation {
   @ApiProperty({ description: 'Enterprise number tva' })
   numberTVA: string;
   @ApiProperty({ description: 'Enterprise social capital' })
-  socialCapital: number;
+  socialCapital?: number;
 }

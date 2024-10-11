@@ -13,5 +13,5 @@ export type UserData = {
   lastName: string;
   isEnterprise: boolean;
   isCustomer: boolean;
-  enterprise: EnterpriseInformation;
+  enterprise: EnterpriseInformation | null;
 };

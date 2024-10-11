@@ -7,7 +7,7 @@ export type EnterpriseInformation = {
   city: string;
   numberTVA: string;
   juridicShape: string;
-  socialCapital: number;
+  socialCapital?: number;
 };
 
 export type EnterpriseCreateModel = {

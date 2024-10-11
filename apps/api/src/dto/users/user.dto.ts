@@ -13,5 +13,5 @@ export class UserDto implements UserData {
   @ApiProperty({ description: 'User is customer' })
   isCustomer: boolean;
   @ApiProperty({ description: 'User enterprise information' })
-  enterprise: EnterpriseInformation;
+  enterprise: EnterpriseInformation | null;
 }

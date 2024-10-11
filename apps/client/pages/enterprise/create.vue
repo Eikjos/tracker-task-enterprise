@@ -10,7 +10,7 @@ import { getAllJuridicShape } from "~/api/juridic-shape";
 import { AutoComplete } from "~/components/ui/autocomplete";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
-import { cn } from "~/lib/utils";
+import { Stepper } from "~/components/ui/stepper";
 
 definePageMeta({
   middleware: ["auth"],
@@ -116,44 +116,10 @@ const onSubmitCreate = form2.handleSubmit(
 
 <template>
   <div>
-    <div class="w-1/2 mx-auto mt-16 flex flex-row justify-center items-center">
-      <div class="flex flex-col w-14 items-center gap-2 h-28">
-        <div
-          class="bg-primary w-14 h-14 rounded-full flex flex-row justify-center items-center text-2xl text-white"
-        >
-          1
-        </div>
-        <span class="w-36 text-center text-xs">Numéro de SIRET</span>
-      </div>
-      <div
-        :class="
-          cn('w-1/5 h-1 bg-primary rounded-e-full mb-14 stepper-bar', {
-            'w-2/5': step === 1,
-          })
-        "
-      />
-      <div
-        :class="
-          cn('w-1/5 h-1 bg-accent mb-14 stepper-bar', { 'w-0': step === 1 })
-        "
-      />
-      <div class="flex flex-col w-14 items-center gap-2 h-28">
-        <div
-          :class="
-            cn(
-              'bg-accent w-14 h-14 rounded-full flex flex-row justify-center items-center text-2xl',
-              { 'bg-primary': step === 1 }
-            )
-          "
-        >
-          2
-        </div>
-        <span class="w-36 text-center text-xs"
-          >Vérification des informations</span
-        >
-      </div>
-    </div>
-
+    <Stepper
+      :step="0"
+      :steps="['Numéro de Siret', 'Vérification des informations']"
+    />
     <form
       v-if="step === 0"
       class="w-1/2 mx-auto mt-5 bg-accent rounded-lg border-2 border-input p-5"
