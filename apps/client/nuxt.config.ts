@@ -2,7 +2,8 @@
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
-  css: ['~/assets/css/main.css'],
+  css: ["~/assets/css/main.css"],
+  build: {},
   postcss: {
     plugins: {
       tailwindcss: {},
@@ -17,13 +18,13 @@ export default defineNuxtConfig({
   },
   vueQuery: {
     stateKey: "vue-query-nuxt",
-    vueQueryPluginOptions: {}
+    vueQueryPluginOptions: {},
   },
   imports: {
     autoImport: true,
   },
   pinia: {
-    storesDirs: ['./stores/**'],
+    storesDirs: ["./stores/**"],
   },
   modules: [
     "@nuxt/eslint",
@@ -31,14 +32,14 @@ export default defineNuxtConfig({
     "@hebilicious/vue-query-nuxt",
     "@nuxtjs/tailwindcss",
     [
-      '@vee-validate/nuxt',
+      "@vee-validate/nuxt",
       {
         autoImports: true,
         componentNames: {
-          Form: 'VeeForm',
-          Field: 'VeeField',
-          FieldArray: 'VeeFieldArray',
-          ErrorMessage: 'VeeErrorMessage',
+          Form: "VeeForm",
+          Field: "VeeField",
+          FieldArray: "VeeFieldArray",
+          ErrorMessage: "VeeErrorMessage",
         },
       },
     ],

@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "client",
   "private": true,
   "type": "module",
   "scripts": {
@@ -15,6 +15,7 @@
     "@nuxt/fonts": "^0.8.0",
     "@pinia/nuxt": "^0.5.4",
     "@radix-icons/vue": "^1.0.0",
+    "@rollup/rollup-linux-arm64-musl": "^4.24.0",
     "@tanstack/vue-query": "^5.54.1",
     "@vee-validate/nuxt": "^4.13.2",
     "@vee-validate/zod": "^4.13.2",
