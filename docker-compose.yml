@@ -20,7 +20,8 @@ services:
       - JWT_SECRET=SECRETJWTOKENAEPDKCALF2317893!
       - INSEE_API_KEY=
     build:
-      context: ./apps/api
+      dockerfile: ./apps/api/Dockerfile
+      context: .
     ports:
       - "8080:80"
   client:

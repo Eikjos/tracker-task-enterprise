@@ -6,7 +6,6 @@ RUN apk update
 # Set working directory
 WORKDIR /app
 COPY . .
-RUN npx turbo prune --scope=client --docker
  
 # Add lockfile and package.json's of isolated subworkspace
 FROM base AS installer
@@ -22,7 +21,7 @@ RUN npm install
  
 # Build the project
 COPY --from=builder /app/out/full/ .
-RUN npx turbo run build --scope=client --include-dependencies --no-deps
+RUN npm build
  
 FROM base AS runner
 WORKDIR /app

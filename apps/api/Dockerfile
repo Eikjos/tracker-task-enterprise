@@ -1,30 +1,33 @@
-FROM node:lts-alpine AS builder
+FROM node:alpine AS builder
+RUN apk add --no-cache libc6-compat
 RUN apk update
 # Set working directory
 WORKDIR /app
+RUN npm install -g turbo pnpm
 COPY . .
 RUN npx turbo prune --scope=api --docker
-
+ 
 # Add lockfile and package.json's of isolated subworkspace
-FROM node:lts-alpine AS installer
+FROM builder AS installer
+RUN apk add --no-cache libc6-compat
 RUN apk update
 WORKDIR /app
-COPY --from=builder /app/out/json/ .
-COPY --from=builder /app/out/yarn.lock ./yarn.lock
-COPY --from=builder /app/turbo.json ./turbo.json
-COPY --from=builder /app/apps/api/prisma ./prisma
-RUN npm install --frozen-lockfile
-RUN npx psrisma generate 
-
-
-FROM node:lts-alpine AS sourcer
-WORKDIR /app
-COPY --from=installer /app/ .
-COPY --from=builder /app/out/full/ .
+ 
+# First install the dependencies (as they change less often)
 COPY .gitignore .gitignore
-RUN npx turbo run build --scope=api --include-dependencies --no-deps
-
-FROM node:lts-alpine as runner
+COPY --from=builder /app/out/json/ .
+COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+RUN pnpm install
+ 
+# Build the project
+COPY --from=builder /app/out/full/ .
+COPY turbo.json turbo.json
+RUN npx turbo run build --filter=api...
+ 
+FROM node:alpine AS runner
 WORKDIR /app
-COPY --from=sourcer /app/ .
-CMD [ "node", "apps/api/dist/main.js" ]
+
+COPY --from=installer /app/apps/api/package.json .
+
+ 
+CMD node apps/api/dist/main.js
