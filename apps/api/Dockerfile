@@ -5,6 +5,7 @@ RUN apk update
 WORKDIR /app
 RUN npm install -g turbo pnpm
 COPY . .
+RUN cd apps/api && npx prisma generate
 RUN npx turbo prune --scope=api --docker
  
 # Add lockfile and package.json's of isolated subworkspace
@@ -29,5 +30,6 @@ WORKDIR /app
 
 COPY --from=installer /app/apps/api/package.json .
 
+EXPOSE 8080
  
 CMD node apps/api/dist/main.js

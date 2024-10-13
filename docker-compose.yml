@@ -31,7 +31,8 @@ services:
     environment:
       - API_URL=http://api
     build:
-      context: ./apps/client
+      dockerfile: ./apps/client/Dockerfile
+      context: .
     ports:
       - "3000:80"
 volumes:
