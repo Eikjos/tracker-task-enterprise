@@ -1,0 +1,15 @@
+model Customer {
+  id Int @id @default(autoincrement())
+  name String
+  siret String?
+  TVANumber String?
+  address String
+  city String
+  zipCode String
+  country String
+  email String
+  phone String
+  creationDate DateTime @default(now())
+  users User[]
+  enterprises EntepriseCustomer[]
+}

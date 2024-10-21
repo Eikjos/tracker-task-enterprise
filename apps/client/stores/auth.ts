@@ -1,3 +1,4 @@
+import type { UserData } from "@repo/models";
 import { defineStore } from "pinia";
 import type { UserInformation } from "~/types/auth";
 
@@ -9,4 +10,15 @@ export const useAuthStore = defineStore("auth", {
     isLoading: false,
     isAuthenticated: false,
   }),
+  actions: {
+    setUser(userData: UserData | undefined) {
+      this.user = userData;
+    },
+    setAuthenticated(value: boolean) {
+      this.isAuthenticated = value;
+    },
+    setLoading(value: boolean) {
+      this.isLoading = value;
+    },
+  },
 });

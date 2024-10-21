@@ -1,7 +1,6 @@
 import ky from "ky";
-
 const client = ky.create({
-  prefixUrl: process.env.API_URL,
+  prefixUrl: process.env.BASE_URL,
   hooks: {
     beforeRequest: [
       (options) => {

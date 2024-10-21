@@ -1,4 +1,4 @@
-import type { EnterpriseInformation } from "../enterprise";
+import type { EnterpriseInformation } from "../enterprises";
 
 export type UserRegister = {
   firstName: string;

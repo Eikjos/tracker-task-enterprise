@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { JuridicShapeModel } from '@repo/models';
-import { JuridicShapeDto } from 'src/dto/juridic-shapes';
+import { JuridicShapeDto } from 'src/dto/juridic-shapes/juridic-shape.dto';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()

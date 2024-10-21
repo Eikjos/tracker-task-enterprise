@@ -1,6 +1,6 @@
-import { QueryClient } from 'vue-query';
+import type { QueryClient } from "vue-query";
 
-declare module '#app' {
+declare module "#app" {
   interface NuxtApp {
     $queryClient: QueryClient;
   }

@@ -4,9 +4,11 @@ import Header from "~/components/organisms/Header.vue";
 </script>
 
 <template>
-  <div class="w-screen min-h-[calc(100vh-59px)]">
-    <Header />
-    <slot />
+  <div>
+    <div class="w-screen min-h-[calc(100vh-59px)]">
+      <Header />
+      <slot />
+    </div>
+    <Footer />
   </div>
-  <Footer />
 </template>

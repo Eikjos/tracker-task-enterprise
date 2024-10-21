@@ -10,7 +10,9 @@ import Menu from "~/components/organisms/Menu.vue";
       <Header />
       <div class="flex flew-row">
         <Menu />
-        <slot />
+        <div class="mt-5 w-full px-5">
+          <slot />
+        </div>
       </div>
     </div>
     <Footer class="mt-10" />

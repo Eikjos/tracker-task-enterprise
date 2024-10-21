@@ -24,6 +24,7 @@ export function useLogin() {
       authStore.isAuthenticated = true;
 
       // Gérer les cookies
+      authStore.setUser(data.user);
       useCookie("token").value = data.token;
       useCookie("refreshToken").value = data.refreshToken;
     },

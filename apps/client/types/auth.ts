@@ -1,7 +1,9 @@
+import type { UserData } from "@repo/models";
+
 export interface UserInformation {
-  user?: {id: number},
-  token?: string,
-  refreshToken?: string
+  user?: UserData;
+  token?: string;
+  refreshToken?: string;
   isLoading: boolean;
   isAuthenticated: boolean;
 }

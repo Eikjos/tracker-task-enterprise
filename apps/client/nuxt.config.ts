@@ -16,6 +16,17 @@ export default defineNuxtConfig({
       viewport: "width=device-width, initial-scale=1",
     },
   },
+  vite: {
+    server: {
+      proxy: {
+        "/api": {
+          target: process.env.API_URL,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ""),
+        },
+      },
+    },
+  },
   vueQuery: {
     stateKey: "vue-query-nuxt",
     vueQueryPluginOptions: {},

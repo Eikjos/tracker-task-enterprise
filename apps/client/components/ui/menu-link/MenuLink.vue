@@ -3,7 +3,7 @@
     <NuxtLink
       :to="url"
       class="p-2 block hover:bg-accent rounded-md w-full h-full"
-      active-class="bg-background text-white"
+      active-class="bg-primary text-white"
       >{{ name }}</NuxtLink
     >
   </li>

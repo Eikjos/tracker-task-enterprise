@@ -6,7 +6,7 @@ import { CreateUserDto } from 'src/dto/users/create-user.dto';
 import { UserService } from './user.service';
 
 @ApiTags('Users')
-@Controller('api/users')
+@Controller('users')
 export class UsersController {
   constructor(private readonly userService: UserService) {}
 
@@ -24,6 +24,7 @@ export class UsersController {
     type: RefreshSessionDto,
   })
   async currentUser(@Body() refresh: RefreshSessionDto) {
+    console.log('coucou');
     return await this.userService.currentUser(refresh);
   }
 }

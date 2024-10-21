@@ -1,7 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { EnterpriseCreateDto } from 'src/dto/enterprise/enteprise-create';
-import { EnterpriseInformationDto } from 'src/dto/enterprise/enterprise-info.dto';
+import { EnterpriseCreateDto } from 'src/dto/enterprises/enteprise-create.dto';
+import { EnterpriseInformationDto } from 'src/dto/enterprises/enterprise-info.dto';
 import { PrismaService } from 'src/prisma.service';
 import {
   EtablissementResponse,

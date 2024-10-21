@@ -2,19 +2,20 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
   Post,
   Query,
   Request,
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { EnterpriseCreateDto } from 'src/dto/enterprise/enteprise-create';
-import { EnterpriseInformationDto } from 'src/dto/enterprise/enterprise-info.dto';
+import { EnterpriseCreateDto } from 'src/dto/enterprises/enteprise-create.dto';
+import { EnterpriseInformationDto } from 'src/dto/enterprises/enterprise-info.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { EnterpriseService } from './enterprise.service';
 
 @ApiTags('Enterprise')
-@Controller('api/enterprise')
+@Controller('enterprise')
 export class EnterpriseController {
   constructor(private readonly enterpriseService: EnterpriseService) {}
 
@@ -28,6 +29,7 @@ export class EnterpriseController {
 
   @UseGuards(AuthGuard)
   @Post()
+  @HttpCode(200)
   async createEnterprise(
     @Body() model: EnterpriseCreateDto,
     @Request() req: any,

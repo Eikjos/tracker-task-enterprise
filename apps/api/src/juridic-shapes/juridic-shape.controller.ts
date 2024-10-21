@@ -4,7 +4,7 @@ import { AuthGuard } from 'src/guards/auth.guard';
 import { JuridicShapeService } from './juridic-shape.service';
 
 @ApiTags('Juridics Shapes')
-@Controller('api/juridic-shapes')
+@Controller('juridic-shapes')
 export class JuridicShapeController {
   constructor(private readonly juridicShapeService: JuridicShapeService) {}
 

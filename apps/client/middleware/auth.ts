@@ -1,22 +1,23 @@
+import type { UserInformationData } from "@repo/models";
+
 export default defineNuxtRouteMiddleware(async () => {
   if (import.meta.server) {
     const store = useAuthStore();
-    if (!store.refreshToken) {
-      return navigateTo("/login");
-    }
-  }
-  if (import.meta.client) {
-    const store = useAuthStore();
-    const refresh = useRefreshSession();
-    if (store.refreshToken !== undefined) {
-      refresh.mutate(
-        { refreshToken: store.refreshToken },
+    if (store.refreshToken) {
+      const { data, error } = await useFetch<UserInformationData>(
+        process.env.BASE_URL + "/api/users/@me",
         {
-          onError: () => {
-            return navigateTo("/login");
-          },
+          method: "POST",
+          body: { refreshToken: store.refreshToken },
         }
       );
+
+      if (error.value || !data.value?.user) {
+        return navigateTo("/login");
+      }
+      store.setUser(data.value.user);
+      useCookie("token").value = data.value.token;
+      useCookie("refreshToken").value = data.value.refreshToken;
     } else {
       return navigateTo("/login");
     }

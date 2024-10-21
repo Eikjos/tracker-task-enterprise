@@ -11,8 +11,18 @@ model Enterprise {
   email String
   phone String
   creationDate DateTime
+  customers EntepriseCustomer[]
   manager User @relation(fields: [managerId], references: [id])
   managerId Int @unique
   juridicShape JuridicShape @relation(fields: [juridicShapeId], references: [code])
   juridicShapeId String @unique
+}
+
+model EntepriseCustomer {
+  enterprise  Enterprise @relation(fields: [enterpriseId], references: [id])
+  enterpriseId     Int
+  customer  Customer @relation(fields: [customerId], references: [id])
+  customerId Int
+  assignedAt DateTime @default(now())
+  @@id([enterpriseId, customerId])
 }

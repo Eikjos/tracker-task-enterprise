@@ -10,4 +10,6 @@ model User {
   isEnterprise Boolean @default(false)
   isCustomer Boolean @default(false)
   enterprise Enterprise?
+  customer Customer? @relation(fields: [customerId], references: [id])
+  customerId Int?
 }

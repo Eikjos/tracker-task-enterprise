@@ -17,7 +17,7 @@ import { UserService } from '../users/user.service';
 export class AuthController {
   constructor(private readonly userService: UserService) {}
 
-  @Post('/api/login')
+  @Post('login')
   @HttpCode(200)
   @ApiBody({
     type: LoginDto,
@@ -26,7 +26,7 @@ export class AuthController {
     return await this.userService.login(loginData.email, loginData.password);
   }
 
-  @Post('/api/logout')
+  @Post('logout')
   @HttpCode(200)
   @UseGuards(AuthGuard)
   async logout(@Request() req: any) {
