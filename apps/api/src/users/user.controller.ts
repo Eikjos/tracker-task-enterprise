@@ -24,7 +24,6 @@ export class UsersController {
     type: RefreshSessionDto,
   })
   async currentUser(@Body() refresh: RefreshSessionDto) {
-    console.log('coucou');
     return await this.userService.currentUser(refresh);
   }
 }

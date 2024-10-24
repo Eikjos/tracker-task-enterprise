@@ -8,7 +8,7 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { EnterpriseCreateDto } from 'src/dto/enterprises/enteprise-create.dto';
 import { EnterpriseInformationDto } from 'src/dto/enterprises/enterprise-info.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
@@ -16,6 +16,7 @@ import { EnterpriseService } from './enterprise.service';
 
 @ApiTags('Enterprise')
 @Controller('enterprise')
+@ApiBearerAuth()
 export class EnterpriseController {
   constructor(private readonly enterpriseService: EnterpriseService) {}
 

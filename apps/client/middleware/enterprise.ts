@@ -15,8 +15,7 @@ export default defineNuxtRouteMiddleware(async () => {
     );
 
     if (error.value || !data.value?.user) {
-      console.error("coucou", error.value?.message);
-      return navigateTo("/no");
+      return navigateTo("/login");
     }
     store.setUser(data.value.user);
     useCookie("token").value = data.value.token;

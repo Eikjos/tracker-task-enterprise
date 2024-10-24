@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
         secret: process.env.JWT_SECRET,
       });
       request['userId'] = payload.sub;
-      request['enterpriseId'] = payload.entrepriseId;
+      request['enterpriseId'] = payload.enterpriseId;
     } catch {
       throw new UnauthorizedException();
     }

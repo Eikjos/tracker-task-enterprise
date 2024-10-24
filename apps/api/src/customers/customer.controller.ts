@@ -7,13 +7,14 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import CustomerCreateDto from 'src/dto/customers/customer-create.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { CustomerService } from './customer.service';
 
 @ApiTags('Customers')
 @Controller('customers')
+@ApiBearerAuth()
 export class CustomerController {
   constructor(private readonly customerService: CustomerService) {}
 
