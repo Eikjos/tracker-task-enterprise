@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import {} from "radix-vue";
 import { findAllCustomer } from "~/api/customer";
+import CreateCustomerModal from "~/components/templates/CreateCutomerModal.vue";
 import CustomerCard from "~/components/templates/CustomerCard.vue";
+import { Button } from "~/components/ui/button";
 
 definePageMeta({
   middleware: ["enterprise"],
@@ -9,13 +12,24 @@ const { data, isLoading } = useQuery({
   queryKey: ["customer"],
   queryFn: findAllCustomer,
 });
+const open = ref(false);
+const openModal = () => {
+  open.value = true;
+};
 </script>
 
 <template>
   <div>
     <h1 class="text-3xl mb-2 pl-5">Mes clients</h1>
     <hr />
+    <div class="flex flex-row justify-end mt-3">
+      <Button @click="openModal">Ajouter +</Button>
+    </div>
+    <CreateCustomerModal v-model:open="open" />
     <div v-if="isLoading">
+      <p>Chargement...</p>
+    </div>
+    <div v-else-if="data?.length === 0">
       <p>Chargement...</p>
     </div>
     <div v-else>
