@@ -8,13 +8,19 @@ import { Button } from "~/components/ui/button";
 definePageMeta({
   middleware: ["enterprise"],
 });
-const { data, isLoading } = useQuery({
+const { data, isLoading, refetch } = useQuery({
   queryKey: ["customer"],
   queryFn: findAllCustomer,
 });
 const open = ref(false);
 const openModal = () => {
   open.value = true;
+};
+
+const customerCreateSuccess = () => {
+  const { $queryClient } = useNuxtApp();
+  $queryClient.invalidateQueries({ queryKey: ["customer"] });
+  refetch();
 };
 </script>
 
@@ -25,12 +31,15 @@ const openModal = () => {
     <div class="flex flex-row justify-end mt-3">
       <Button @click="openModal">Ajouter +</Button>
     </div>
-    <CreateCustomerModal v-model:open="open" />
+    <CreateCustomerModal v-model:open="open" @success="customerCreateSuccess" />
     <div v-if="isLoading">
       <p>Chargement...</p>
     </div>
-    <div v-else-if="data?.length === 0">
-      <p>Chargement...</p>
+    <div
+      v-else-if="data?.length === 0"
+      class="h-[calc(100vh-300px)] w-full flex flex-row justify-center items-center"
+    >
+      <p>Vous n'avez pas encore de client.</p>
     </div>
     <div v-else>
       <div class="w-full h-10" />

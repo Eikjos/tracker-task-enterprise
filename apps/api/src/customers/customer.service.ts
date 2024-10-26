@@ -22,11 +22,13 @@ export class CustomerService {
   }
 
   async findAll(enterpriseId: number) {
-    await this.prisma.customer.findMany({
+    return await this.prisma.customer.findMany({
       where: {
         enterprises: {
           some: {
-            enterpriseId: enterpriseId,
+            enterprise: {
+              id: enterpriseId,
+            },
           },
         },
       },

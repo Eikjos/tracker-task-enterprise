@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import type { CreateCustomer } from "@repo/models";
 import { z } from "zod";
+import { createCustomer } from "~/api/customer";
 
 type CreateCustomerModal = {
   open: boolean;
+  onSuccess: () => void;
 };
 
 const props = defineProps<CreateCustomerModal>();
@@ -38,6 +40,7 @@ const customerSchema = toTypedSchema(
     city: z.string().min(1, { message: "Ce champs est requis" }),
     zipCode: z.string().min(1, { message: "Ce champs est requis" }),
     name: z.string().min(1, { message: "Ce champs est requis" }),
+    country: z.string().min(1, { message: "Ce champs est requis" }),
   })
 );
 const { handleSubmit, errors, defineField } = useForm<CreateCustomer>({
@@ -51,10 +54,19 @@ const [tvaNumber] = defineField("TVANumber");
 const [city] = defineField("city");
 const [zipCode] = defineField("zipCode");
 const [address] = defineField("address");
+const [country] = defineField("country");
+
+const customerMutation = useMutation({
+  mutationFn: createCustomer,
+  mutationKey: ["customer"],
+  onSuccess: () => {
+    props.onSuccess();
+  },
+});
 
 const onSubmit = handleSubmit((values: CreateCustomer) => {
   onChangeModal(false);
-  console.log(values);
+  customerMutation.mutate(values);
 });
 </script>
 
@@ -64,7 +76,7 @@ const onSubmit = handleSubmit((values: CreateCustomer) => {
       <DialogHeader>
         <h3 class="text-2xl font-medium">Ajout d'un client</h3>
       </DialogHeader>
-      <form class="grid grid-cols-2 gap-2 gap-y-5">
+      <form class="grid grid-cols-3 gap-2 gap-y-5">
         <Input
           v-model:model-value="name"
           label="Nom du client"
@@ -76,12 +88,6 @@ const onSubmit = handleSubmit((values: CreateCustomer) => {
           label="Siret"
           placeholder="Siret"
           :error="errors.siret"
-        />
-        <Input
-          v-model:model-value="phone"
-          label="Téléphone"
-          placeholder="Téléphone"
-          :error="errors.phone"
         />
         <Input
           v-model:model-value="tvaNumber"
@@ -109,11 +115,23 @@ const onSubmit = handleSubmit((values: CreateCustomer) => {
           :error="errors.city"
         />
         <Input
+          v-model:model-value="country"
+          label="Pays"
+          placeholder="Pays"
+          :error="errors.country"
+        />
+        <Input
           v-model:model-value="email"
           label="Adresse mail"
           placeholder="Adresse mail"
           class="col-span-2"
           :error="errors.email"
+        />
+        <Input
+          v-model:model-value="phone"
+          label="Téléphone"
+          placeholder="Téléphone"
+          :error="errors.phone"
         />
       </form>
       <DialogFooter class="sm:justify-between">
