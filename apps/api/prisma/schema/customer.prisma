@@ -11,5 +11,5 @@ model Customer {
   phone String
   creationDate DateTime @default(now())
   users User[]
-  enterprises EntepriseCustomer[]
+  enterprises EnterpriseCustomer[]
 }

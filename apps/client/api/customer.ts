@@ -6,3 +6,6 @@ export const findAllCustomer = () =>
 
 export const createCustomer = (json: CreateCustomer) =>
   client.post("api/customers", { json });
+
+export const deleteCustomer = (id: number) =>
+  client.delete(`api/customers/${id}`);

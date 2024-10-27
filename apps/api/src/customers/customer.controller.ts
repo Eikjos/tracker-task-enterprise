@@ -1,8 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
+  Param,
   Post,
   Request,
   UseGuards,
@@ -32,5 +34,14 @@ export class CustomerController {
   @Get()
   async getAll(@Request() req: any) {
     return await this.customerService.findAll(parseInt(req['enterpriseId']));
+  }
+
+  @UseGuards(AuthGuard)
+  @Delete(':id')
+  async delete(@Param('id') id: string, @Request() req: any) {
+    return await this.customerService.delete(
+      parseInt(id),
+      parseInt(req['enterpriseId']),
+    );
   }
 }

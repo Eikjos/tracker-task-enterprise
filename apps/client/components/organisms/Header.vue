@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { user, ...store } = useAuthStore();
+const { user } = useAuthStore();
 </script>
 
 <template>

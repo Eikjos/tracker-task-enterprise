@@ -47,6 +47,7 @@ const customerCreateSuccess = () => {
         v-for="customer in data"
         :key="customer.id"
         :customer="customer"
+        @delete="customerCreateSuccess"
       />
     </div>
   </div>

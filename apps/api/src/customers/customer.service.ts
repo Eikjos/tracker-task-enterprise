@@ -34,4 +34,41 @@ export class CustomerService {
       },
     });
   }
+
+  async delete(customerId: number, enterpriseId: number) {
+    console.log(typeof customerId);
+    const customer = await this.prisma.customer.findFirst({
+      where: {
+        id: customerId,
+        enterprises: {
+          some: {
+            enterprise: {
+              id: enterpriseId,
+            },
+          },
+        },
+      },
+      include: {
+        enterprises: true,
+      },
+    });
+    if (!customer) {
+      return;
+    }
+    await this.prisma.enterpriseCustomer.delete({
+      where: {
+        enterpriseId_customerId: {
+          enterpriseId: enterpriseId,
+          customerId: customerId,
+        },
+      },
+    });
+    if (customer.enterprises.length == 1) {
+      await this.prisma.customer.delete({
+        where: {
+          id: customerId,
+        },
+      });
+    }
+  }
 }
