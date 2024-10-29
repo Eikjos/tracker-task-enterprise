@@ -35,7 +35,6 @@ const onDelete = () => {
         </CardDescription>
       </div>
       <div>
-        <Button variant="outline" class="mr-2">Editer</Button>
         <Button variant="destructive" @click="onDelete">Supprimer</Button>
       </div>
     </CardHeader>
