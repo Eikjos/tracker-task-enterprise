@@ -25,7 +25,7 @@ const onClickLogout = () => {
       <MenuLink name="Mon entreprise" url="enterprise" />
       <MenuLink name="Ma comptabilité" url="comptability" />
       <MenuLink name="Mes clients" url="customers" />
-      <MenuLink name="Mes factures" url="orders" />
+      <MenuLink name="Mes factures" url="invoices" />
       <MenuLink name="Mes tâches" url="tasks" />
       <Button
         class="mx-auto w-full mt-5"
